@@ -4,10 +4,10 @@
 (function() {
     /**
      * 常量定义
-     * @type {{FORESEE_MD_PROPERTY: string, CHARS: Array}}
+     * @type {{MD_PROPERTY: string, CHARS: Array}}
      */
     var CONSTANT = {
-        FORESEE_MD_PROPERTY: "foresee-md-property",
+        MD_PROPERTY: "md-property",
         V: "v_0.0.1"
     };
     Math.uuidFast = function() {
@@ -170,26 +170,26 @@
         },
         //设置自定义属性(key相同时覆盖，key不同时追加)
         setProperty: function(param) {
-            var storageValue = sessionStorage.getItem(CONSTANT.FORESEE_MD_PROPERTY); //sessionStorage中的json字符串
+            var storageValue = sessionStorage.getItem(CONSTANT.MD_PROPERTY); //sessionStorage中的json字符串
             if (!storageValue) {
-                sessionStorage.setItem(CONSTANT.FORESEE_MD_PROPERTY, JSON.stringify(param[1]));
+                sessionStorage.setItem(CONSTANT.MD_PROPERTY, JSON.stringify(param[1]));
             } else {
-                sessionStorage.setItem(CONSTANT.FORESEE_MD_PROPERTY, JSON.stringify(Utils.mergeJson(param[1], JSON.parse(storageValue))));
+                sessionStorage.setItem(CONSTANT.MD_PROPERTY, JSON.stringify(Utils.mergeJson(param[1], JSON.parse(storageValue))));
             }
         },
         //清空sessionStorage
         delDefProperty: function() {
-            sessionStorage.removeItem(CONSTANT.FORESEE_MD_PROPERTY);
+            sessionStorage.removeItem(CONSTANT.MD_PROPERTY);
         },
         //清楚自定义属性某个值
         delPropertyByKey: function(key) {
-            var storageValue = sessionStorage.getItem(CONSTANT.FORESEE_MD_PROPERTY);
+            var storageValue = sessionStorage.getItem(CONSTANT.MD_PROPERTY);
             var storageValueObj = JSON.parse(storageValue);
             for (var i = 1; i < key.length - 1; i++) {
                 delete storageValueObj[key[i]];
             }
             json = JSON.stringify(storageValueObj);
-            sessionStorage.setItem(CONSTANT.FORESEE_MD_PROPERTY, json);
+            sessionStorage.setItem(CONSTANT.MD_PROPERTY, json);
         },
         // 识别被收集终端调用的API
         resolveApi: function() {
@@ -282,7 +282,7 @@
             // 用户标识参数
             params.uk = this.getUk();
             params.v = CONSTANT.V;
-            params.ep = sessionStorage.getItem(CONSTANT.FORESEE_MD_PROPERTY) || '';
+            params.ep = sessionStorage.getItem(CONSTANT.MD_PROPERTY) || '';
             this.isInit = true;
         },
         // 构造请求参数对象,每次会重新构造请求参数，之前params对象已存在的参数会保留，如登陆用户信息，避免每次调用都要由调用方请求
